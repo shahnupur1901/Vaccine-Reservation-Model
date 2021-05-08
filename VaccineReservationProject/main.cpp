@@ -5,12 +5,11 @@ using namespace std;
 #include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
-#include "Hospital.h"
-
+#include "Node.h"
 int main(){
 	cout<<"Welcome to the COVID-19 Vaccination Portal!"<<endl;
-	Government g;
 	Citizen c;
+	Government g;
 	int ch = 0;
 	do{
 		cout<<"Enter your choice : "<<endl;
@@ -18,6 +17,7 @@ int main(){
 		cout<<"2 - Delete your reservation."<<endl;
 		cout<<"3 - Enter  "<<endl;
 		cout<<"4 - Check the status of your vaccination."<<endl
+		cout<<"5 - Exit"<<endl;
 		int option; cin>>option;
 		switch(option){
 		case 1 : g.reserveVaccine(); break;
@@ -27,7 +27,12 @@ int main(){
 			string s; cin>>s;
 			if(s=="yes")
 				g.modify();
+			break;
+			}
+		case 4 : g.checkStatus();break
+		case 5 : ch=1; break;
+		default : ch=1; break;
 		}
-		}
-	}
+	}while(ch==0);
+	cout<<"Have a nice day!"<<endl;
 }

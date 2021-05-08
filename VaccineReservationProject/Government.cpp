@@ -11,13 +11,16 @@ using namespace std;
 #include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
-
+#include "Node.h"
 Government::Government() {
 	// TODO Auto-generated constructor stub
 	numVaccines = 10;
 	numSlots = 5;
-	allocatedSlotCount = {0,0,0,0,0};
-	vaccinesPerSlot = numVaccines/numSlots
+	for(int i=0;i<numSlots;i++){
+		allocatedSlotCount[i] = 0;
+	}
+	vaccinesPerSlot = numVaccines/numSlots;
+	numVaccinatedOnce = numVaccinatedTwice = 0;
 
 }
 int Government::available(){
@@ -41,8 +44,10 @@ void Government::reserveVaccine(){
 	Citizen c;
 	c.accept();
 	int s = available();
-	if(s=0){
+	if(s==0){
 		//waiting list
+		c.status = "Unconfirmed";
+		waitingList.enqueue(c);
 	}
 	else if(s==-1){
 		cout<<"Try again."<<endl;
@@ -60,7 +65,7 @@ void Government::reserveVaccine(){
 void Government::deleteVaccine(){
 	Citizen c;
 	c.accept();
-	cout<<"Enter the status of your reservation \n1- Confirmed\n2- Unconfirmed"<<endl;
+	cout<<"Enter the status of your reservation: \n1- Confirmed\n2- Unconfirmed"<<endl;
 	int choice;cin>>choice;
 	switch(choice){
 	case 1:{
@@ -69,23 +74,34 @@ void Government::deleteVaccine(){
 		if(!waitingList.isEmpty()){
 				Citizen cwq = waitingList.dequeue();
 				cwq.slot = s;
-				cwq.status = "Confirmed!"<<endl;
+				cwq.status = "Confirmed!";
 				l.replace(c.aadhar,cwq);//replace(long adhar, Citizen cwq)
 
 		}
 		else{
-			arr[s-1].deleteNode(c.aadhar);compare with them
+			arr[s-1].deleteNode(c.getAadhar());//compare with them
 			allocatedSlotCount[s-1]--;
 		}
+		break;
 	}
-	case 2:
+	case 2:{
+		waitingList.deleteNode(c.getAadhar());
+	}
+
 	}
 }
 void Government::modify(){
 	Citizen c;
 	c.accept();
-	Node* ptr  = l.search(c.adhar);
-	ptr->numTimesVaccinated++;
+	Node* ptr  = l.search(c.getAadhar());
+	ptr->c.numTimesVaccinated++;
+	if(ptr->c.numTimesVaccinated==1){
+		numVaccinatedOnce++;
+	}
+	else{
+		numVaccinatedOnce--;
+		numVaccinatedTwice++;
+	}
 }
 void Government::checkStatus(){
 	Citizen c;
@@ -98,8 +114,8 @@ void Government::checkStatus(){
 		for(int i=0;i<5;i++){
 			Node* ptr = arr[i].head;//check!!
 			while(ptr!=NULL){
-				if(ptr->aadhar == c.aadhar){
-					ptr->display();
+				if(ptr->c.getAadhar() == c.getAadhar()){
+					ptr->c.display();
 					flag=1;
 					break;
 				}
@@ -107,15 +123,7 @@ void Government::checkStatus(){
 			}
 		}
 		if(flag==0){
-			Node* ptr = front;
-			while(ptr!=NULL){
-					if(ptr->aadhar == c.aadhar){
-						ptr->display();
-						flag=1;
-						break;
-					}
-					ptr = ptr->next;
-					}
+
 		}
 		if(flag==0){
 			cout<<"Not registered in the database."<<endl;

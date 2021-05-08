@@ -7,11 +7,7 @@
 #pragma once
 #include <iostream>
 #include <string.h>
-#include "Citizen.h"
-#include "Government.h"
-#include "LinkedList.h"
-#include "Queue.h"
-#include "Hospital.h"
+
 
 using namespace std;
 #ifndef CITIZEN_H_
@@ -26,7 +22,7 @@ public:
 	Citizen();
 	void accept();
 	void display();
-	void
+	long getAadhar();
 };
 
 #endif /* CITIZEN_H_ */

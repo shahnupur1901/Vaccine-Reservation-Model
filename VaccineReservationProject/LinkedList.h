@@ -11,20 +11,20 @@
 #include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
-#include "Hospital.h"
+#include "Node.h"
 using namespace std;
 #ifndef LINKEDLIST_H_
 #define LINKEDLIST_H_
 
 class LinkedList {
-	Citizen* head;
+	Citizen c;
 public:
-	LinkedList();
-	int x;
-	void insert(Citizen* c);//vaccinated for the first time
-	void modify(Citizen* c);//vaccinated for the second time
-	void deleteOnce(Citizen* c);//delete node
-	void deleteTwice(Citizen* c);//reduce times vaccinated
+	 Node* head;
+	 LinkedList();
+	 void insert(Citizen c);
+	 void deleteNode(long);
+	 Node* search(long);
+	 bool is_empty();
 };
 
 #endif /* LINKEDLIST_H_ */
