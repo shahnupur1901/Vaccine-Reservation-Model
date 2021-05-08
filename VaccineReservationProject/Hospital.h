@@ -19,6 +19,7 @@ class Hospital {
 public:
 	int numVaccinesAvailable;
 	int numSlots;
+	int allocated[numSlots];
 	Hospital();
 };
 
