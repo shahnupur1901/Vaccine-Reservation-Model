@@ -4,6 +4,7 @@
  *  Created on: 08-May-2021
  *      Author: nupur
  */
+#pragma once
 #include<iostream>
 #include<string.h>
 #include "Citizen.h"
