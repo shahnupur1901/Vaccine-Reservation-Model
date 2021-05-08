@@ -4,6 +4,7 @@
  *  Created on: 08-May-2021
  *      Author: nupur
  */
+#pragma once
 #include<iostream>
 #include<string.h>
 #include "Citizen.h"
@@ -11,6 +12,7 @@
 #include "LinkedList.h"
 #include "Queue.h"
 #include "Hospital.h"
+
 using namespace std;
 #ifndef CITIZEN_H_
 #define CITIZEN_H_
