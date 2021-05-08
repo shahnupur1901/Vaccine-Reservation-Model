@@ -17,14 +17,22 @@ using namespace std;
 #define GOVERNMENT_H_
 
 class Government {
-	LinkedList company1;
-	LinkedList company2;
+	LinkedList l;
 	Queue waitingList;
 	count numVaccinatedOnce;
 	count numVaccinatedTwice;
+	int numSlots,numVaccines;
+	LinkedList arr[numSlots];
+	int allocatedSlotCount[numSlots];
+	int vaccinesPerSlot;
 
 public:
 	Government();
+	void reserveVaccine();
+	void deleteVaccine();
+	bool available();
+	void checkStatus();
+	void modify();
 };
 
 #endif /* GOVERNMENT_H_ */

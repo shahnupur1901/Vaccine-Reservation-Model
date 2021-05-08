@@ -20,6 +20,7 @@ class LinkedList {
 	Citizen* head;
 public:
 	LinkedList();
+	int x;
 	void insert(Citizen* c);//vaccinated for the first time
 	void modify(Citizen* c);//vaccinated for the second time
 	void deleteOnce(Citizen* c);//delete node
