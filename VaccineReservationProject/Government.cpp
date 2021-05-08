@@ -4,13 +4,14 @@
  *  Created on: 08-May-2021
  *      Author: nupur
  */
-
+#include <iostream>
+using namespace std;
 #include "Government.h"
 #include "Citizen.h"
 #include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
-#include "Hospital.h"
+
 Government::Government() {
 	// TODO Auto-generated constructor stub
 	numVaccines = 10;
@@ -48,10 +49,10 @@ void Government::reserveVaccine(){
 		reserveVaccine();
 	}
 	else{
-		arr[slot-1].insert(c);
-		allocatedSlotCount[slot-1]++;
+		arr[s-1].insert(c);
+		allocatedSlotCount[s-1]++;
 		c.numTimesVaccinated++;
-		c.slot = slot;
+		c.slot = s;
 		c.status = "Confirmed!";
 	}
 	c.display();
@@ -67,14 +68,14 @@ void Government::deleteVaccine(){
 		int s;cin>>s;
 		if(!waitingList.isEmpty()){
 				Citizen cwq = waitingList.dequeue();
-				cwq.slot = slot;
+				cwq.slot = s;
 				cwq.status = "Confirmed!"<<endl;
-				l.replace(c.adhar,cwq);//replace(long adhar, Citizen cwq)
+				l.replace(c.aadhar,cwq);//replace(long adhar, Citizen cwq)
 
 		}
 		else{
-			arr[slot-1].deleteNode(c.adhar);compare with them
-			allocatedSlotCount[slot-1]--;
+			arr[s-1].deleteNode(c.aadhar);compare with them
+			allocatedSlotCount[s-1]--;
 		}
 	}
 	case 2:
@@ -89,7 +90,38 @@ void Government::modify(){
 void Government::checkStatus(){
 	Citizen c;
 	c.accept();
-	if(numTimesVaccinated==2)
+	if(c.numTimesVaccinated==2){
+		cout<<"You've been vaccinated twice!"<<endl;
+	}
+	else if(c.numTimesVaccinated==1 || c.numTimesVaccinated==0){
+		int flag=0;
+		for(int i=0;i<5;i++){
+			Node* ptr = arr[i].head;//check!!
+			while(ptr!=NULL){
+				if(ptr->aadhar == c.aadhar){
+					ptr->display();
+					flag=1;
+					break;
+				}
+				ptr = ptr->next;
+			}
+		}
+		if(flag==0){
+			Node* ptr = front;
+			while(ptr!=NULL){
+					if(ptr->aadhar == c.aadhar){
+						ptr->display();
+						flag=1;
+						break;
+					}
+					ptr = ptr->next;
+					}
+		}
+		if(flag==0){
+			cout<<"Not registered in the database."<<endl;
+		}
+	}
+
 
 
 }
