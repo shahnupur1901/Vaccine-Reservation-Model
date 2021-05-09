@@ -8,6 +8,7 @@ using namespace std;
 
 Government::Government() {
 	// TODO Auto-generated constructor stub
+	numVaccines=0;
 	numSlots = 3;
 	numOfMinVaccines = 3;
 	for(int i=0;i<numSlots;i++){//initializing array with 0
