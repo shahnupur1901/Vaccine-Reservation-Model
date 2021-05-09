@@ -1,15 +1,7 @@
-/*
- * Queue.h
- *
- *  Created on: 08-May-2021
- *      Author: nupur
- */
 #pragma once
 #include<iostream>
-#include<string.h>
-#include "Citizen.h"
-#include "LinkedList.h"
 #include "Node.h"
+#include "Citizen.h"
 using namespace std;
 #ifndef QUEUE_H_
 #define QUEUE_H_
@@ -17,15 +9,16 @@ using namespace std;
 class Queue {
 	Citizen c;
 	friend class Citizen;
+public:
 	Node* front;
 	Node* rear;
-public:
 	Queue();
-	void enqueue(Citizen c);
+	void priorityEnqueue(Citizen c);
 	Citizen dequeue();
-	void search(long key);
-	void deleteNode(long key);
+	Node* search(long key);
 	bool isEmpty();
+	bool deleteNodeWaitingList(long key);
+	int citizenAhead(long key);
 };
 
 #endif /* QUEUE_H_ */

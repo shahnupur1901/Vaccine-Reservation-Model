@@ -1,51 +1,61 @@
-/*
- * Citizen.cpp
- *
- *  Created on: 08-May-2021
- *      Author: nupur
- */
 #include <iostream>
 using namespace std;
 #include "Citizen.h"
 #include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
-#include "Node.h"
+
 Citizen::Citizen() {
 	// TODO Auto-generated constructor stub
 	vaccineCompany="\0";
 	numTimesVaccinated = 0;
 	status = "Unconfirmed";
-	vaccineSlot = aadhar = age = 0;
-	slot = -1;
+	citizenAhead = 0;
+	priority = 0;
 }
-void Citizen::accept(){
+bool Citizen::chkEligibility(){
+	cout<<"How many days have passed since you've been tested positive?"<<endl;
+	int days;cin>>days;
+	if(days > 28) return true;
+	else{
+		cout<<"Please come back after "<<28-days<<" days."<<endl;return false;
+	}
+}
+bool Citizen::accept(){
+	cout<<"Have you been infected with COVID-19? 1 - Yes 2 - No"<<endl;
+	int ch;cin>>ch;
+	if(ch==1 && !chkEligibility()){
+		return false;
+	}
 	cout<<"Enter your name : "<<endl;
 	cin>>name;
 	cout<<"Enter your age : "<<endl;
 	cin>>age;
+	if(age>60) priority = 1;
+	else priority = 2;
 	cout<<"Enter your aadhar number : "<<endl;
 	cin>>aadhar;
 	cout<<"Enter the number of times you've been vaccinated : "<<endl;
 	cin>>numTimesVaccinated;
 	if(numTimesVaccinated >= 2){
-		cout<<"According to government guidelines, you are protected from COVID-19"<<endl;
+		cout<<"According to government guidelines, you are protected from COVID-19."<<endl;
+		return false;
 	}
-	if(numTimesVaccinated ==1){
-		cout<<"Enter the name of the vaccine received earlier : "<<endl;
-		cin>>vaccineCompany;
-	}
+	return true;
 }
 void Citizen::display(){
 	cout<<"Your name : "<<name<<endl;
 	cout<<"Your age : "<<age<<endl;
 	cout<<"Your Aadhar number : "<<aadhar<<endl;
+	cout<<"Your status :"<<status<<endl;
 	if(status=="Confirmed!")
 		cout<<"Your slot : "<<slot<<endl;
 	else{
-		cout<<"You are in the waiting list. Number of people ahead of you: "<<endl;
+		cout<<"You are in the waiting list. Number of people ahead of you: "<<citizenAhead<<endl;
 	}
 }
 long Citizen::getAadhar(){
 	return aadhar;
 }
+
+

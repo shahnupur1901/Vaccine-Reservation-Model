@@ -1,20 +1,10 @@
-/*
- * LinkedList.h
- *
- *  Created on: 08-May-2021
- *      Author: nupur
- */
 #pragma once
-#include<iostream>
-#include<string.h>
+#include <iostream>
 #include "Citizen.h"
-#include "Government.h"
-#include "LinkedList.h"
-#include "Queue.h"
 #include "Node.h"
+
 using namespace std;
-#ifndef LINKEDLIST_H_
-#define LINKEDLIST_H_
+
 
 class LinkedList {
 	Citizen c;
@@ -22,9 +12,9 @@ public:
 	 Node* head;
 	 LinkedList();
 	 void insert(Citizen c);
-	 void deleteNode(long);
+	 bool deleteNode(long);
 	 Node* search(long);
 	 bool is_empty();
 };
 
-#endif /* LINKEDLIST_H_ */
+

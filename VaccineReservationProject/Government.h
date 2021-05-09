@@ -1,29 +1,20 @@
-/*
- * Government.h
- *
- *  Created on: 08-May-2021
- *      Author: nupur
- */
 #pragma once
-#include<iostream>
-#include<string.h>
-#include "Citizen.h"
-#include "LinkedList.h"
+#include <iostream>
 #include "Queue.h"
-#include "Node.h"
+#include "LinkedList.h"
+
 using namespace std;
-#ifndef GOVERNMENT_H_
-#define GOVERNMENT_H_
 class Government {
 	LinkedList l;
 	Queue waitingList;
 	int numVaccinatedOnce;
 	int numVaccinatedTwice;
 	int numVaccines;
-	LinkedList arr[10];
-	int allocatedSlotCount[10];
+	LinkedList arr[3];
+	int allocatedSlotCount[3];
 	int vaccinesPerSlot,numSlots;
-
+	int numOfMinVaccines;
+	string password;
 public:
 	Government();
 	void reserveVaccine();
@@ -31,6 +22,8 @@ public:
 	int available();
 	void checkStatus();
 	void modify();
+	void modifyEndOfDay();
+	void govtInterface();
 };
 
-#endif /* GOVERNMENT_H_ */
+

@@ -1,30 +1,24 @@
-/*
- * Government.cpp
- *
- *  Created on: 08-May-2021
- *      Author: nupur
- */
 #include <iostream>
 using namespace std;
 #include "Government.h"
 #include "Citizen.h"
-#include "Government.h"
 #include "LinkedList.h"
 #include "Queue.h"
 #include "Node.h"
+
 Government::Government() {
 	// TODO Auto-generated constructor stub
-	numVaccines = 10;
-	numSlots = 5;
+	numSlots = 2;
+	numOfMinVaccines = 2;
 	for(int i=0;i<numSlots;i++){
 		allocatedSlotCount[i] = 0;
 	}
 	vaccinesPerSlot = numVaccines/numSlots;
 	numVaccinatedOnce = numVaccinatedTwice = 0;
-
+	password = "ICU";
 }
 int Government::available(){
-	bool available[5] = {false};
+	bool available[numSlots] = {false};
 	int slot, flag=0;
 	for(int i=0;i<numSlots;i++){
 		if(allocatedSlotCount[i] < vaccinesPerSlot){
@@ -34,104 +28,174 @@ int Government::available(){
 		}
 	}
 	if(flag==0) return 0;//waiting list
-	cout<<"Select a slot : "<<endl;
-	cin>>slot;
-	if(flag==1 && available[slot-1]==false)return -1;//invalid slot, but slot is available
+	int f = 0;
+	do{
+		f = 0;
+		cout<<"Select a slot : "<<endl;
+		cin>>slot;
+		if(flag==1 && slot>numSlots) {
+			f=1;//invalid slot, but slot is available
+			cout<<"Invalid slot, enter again."<<endl;
+		}
+		else if(flag==1 && available[slot-1]==false){
+			f=1;//invalid slot, but slot is available
+			cout<<"Invalid slot, enter again."<<endl;
+		}
+
+	}while(f==1);
 	return slot;//proper slot
 
 }
 void Government::reserveVaccine(){
 	Citizen c;
-	c.accept();
+	bool isEligible = c.accept();
+	vaccinesPerSlot = numVaccines/numSlots;
+	if(!isEligible) return;
 	int s = available();
 	if(s==0){
-		//waiting list
+		cout<<"For future reference, enter your slot preference : "<<endl;
+		cin>>c.slot;
 		c.status = "Unconfirmed";
-		waitingList.enqueue(c);
-	}
-	else if(s==-1){
-		cout<<"Try again."<<endl;
-		reserveVaccine();
+		waitingList.priorityEnqueue(c);
+		waitingList.search(c.getAadhar())->c.citizenAhead = waitingList.citizenAhead(c.getAadhar());
+		waitingList.search(c.getAadhar())->c.display();
 	}
 	else{
 		arr[s-1].insert(c);
 		allocatedSlotCount[s-1]++;
-		c.numTimesVaccinated++;
-		c.slot = s;
-		c.status = "Confirmed!";
+		Node* ptr = arr[s-1].search(c.getAadhar());
+		ptr->c.slot = s;
+		ptr->c.status = "Confirmed!";
+		ptr->c.display();
 	}
-	c.display();
 }
 void Government::deleteVaccine(){
-	Citizen c;
-	c.accept();
-	cout<<"Enter the status of your reservation: \n1- Confirmed\n2- Unconfirmed"<<endl;
-	int choice;cin>>choice;
-	switch(choice){
-	case 1:{
-		cout<<"Enter the slot you've been allocated : "<<endl;
-		int s;cin>>s;
+	cout<<"Enter your Aadhar number to delete your reservation."<<endl;
+	long a; cin>>a;
+	Node* ptr=NULL;
+	int idx;
+	for(int i=0;i<numSlots;i++){
+		ptr = arr[i].search(a);
+		if(ptr!=NULL){
+			idx = i;
+			break;
+		}
+	}
+	if(ptr!=NULL){
 		if(!waitingList.isEmpty()){
-				Citizen cwq = waitingList.dequeue();
-				cwq.slot = s;
-				cwq.status = "Confirmed!";
-				l.replace(c.aadhar,cwq);//replace(long adhar, Citizen cwq)
+			ptr->c = waitingList.dequeue();
+			ptr->c.slot = idx+1;
+			ptr->c.status = "Confirmed!";
+			cout<<"Your reservation has been successfully deleted from the confirmed slots."<<endl;
 
 		}
 		else{
-			arr[s-1].deleteNode(c.getAadhar());//compare with them
-			allocatedSlotCount[s-1]--;
+			cout<<"hi!"<<endl;
+			bool isDelete = arr[idx].deleteNode(a);
+			allocatedSlotCount[idx]--;
+			cout<<"Your reservation has been successfully deleted from the confirmed slots."<<endl;
 		}
-		break;
-	}
-	case 2:{
-		waitingList.deleteNode(c.getAadhar());
-	}
-
-	}
-}
-void Government::modify(){
-	Citizen c;
-	c.accept();
-	Node* ptr  = l.search(c.getAadhar());
-	ptr->c.numTimesVaccinated++;
-	if(ptr->c.numTimesVaccinated==1){
-		numVaccinatedOnce++;
 	}
 	else{
+		bool isDeleted = waitingList.deleteNodeWaitingList(a);
+		if(isDeleted==true){
+			cout<<"Your reservation has been successfully deleted from the waiting lists."<<endl;
+		}
+		else{
+			cout<<"You are not registered in the vaccination portal."<<endl;
+		}
+	}
+
+}
+void Government::modify(){
+	cout<<"Enter your Aadhar number to check your reservation."<<endl;
+	long a; cin>>a;
+	Node* ptr  = l.search(a);
+	if(ptr==NULL){
+		for(int i=0;i<numSlots;i++){
+			Node* n = arr[i].search(a);
+			if(n!=NULL){
+				ptr = n;
+				break;
+			}
+		}
+		l.insert(ptr->c);
+		numVaccinatedOnce++;
+		if(ptr==NULL){
+			cout<<"You are not registered in the vaccination portal."<<endl;
+			return;
+		}
+	}
+	else{
+		ptr->c.numTimesVaccinated++;
 		numVaccinatedOnce--;
 		numVaccinatedTwice++;
 	}
+	cout<<"You have successfully modified the database. Thank you!"<<endl;
+	bool isDelete = arr[ptr->c.slot - 1].deleteNode(a);
+	allocatedSlotCount[ptr->c.slot - 1]--;
+}
+void Government::modifyEndOfDay(){
+	cout<<"Welcome administrator! Enter your password : "<<endl;
+		string s;
+		cin>>s;
+	if(s.compare(password)!=0){
+			cout<<"Incorrect password."<<endl;
+			return;
+	}
+
+	int minVaccinesperSlot = numOfMinVaccines/numSlots;
+	Node* ptr = waitingList.front;
+	while(ptr!=NULL){
+		ptr->c.priority = 1;
+		ptr = ptr->next;
+	}
+	ptr = waitingList.front;
+	int i=0;
+	while(i!=numOfMinVaccines){
+		if(ptr==NULL)
+			return;
+		if(allocatedSlotCount[ptr->c.slot - 1] < minVaccinesperSlot){
+				ptr->c.status = "Confirmed!";
+				arr[ptr->c.slot - 1].insert(ptr->c);
+				allocatedSlotCount[ptr->c.slot - 1]++;
+				bool isDelete = waitingList.deleteNodeWaitingList(ptr->c.getAadhar());
+				i++;
+			}
+		ptr = ptr ->next;
+	}
 }
 void Government::checkStatus(){
-	Citizen c;
-	c.accept();
-	if(c.numTimesVaccinated==2){
-		cout<<"You've been vaccinated twice!"<<endl;
-	}
-	else if(c.numTimesVaccinated==1 || c.numTimesVaccinated==0){
-		int flag=0;
-		for(int i=0;i<5;i++){
-			Node* ptr = arr[i].head;//check!!
-			while(ptr!=NULL){
-				if(ptr->c.getAadhar() == c.getAadhar()){
-					ptr->c.display();
-					flag=1;
-					break;
-				}
-				ptr = ptr->next;
+		cout<<"Enter your Aadhar number to check your reservation."<<endl;
+		long a; cin>>a;
+		Node* ptr=NULL;
+		int idx=0;
+		for(int i=0;i<numSlots;i++){
+			ptr = arr[i].search(a);
+			if(ptr!=NULL){
+				ptr->c.display();
+				return;
 			}
 		}
-		if(flag==0){
 
-		}
-		if(flag==0){
-			cout<<"Not registered in the database."<<endl;
-		}
-	}
-
-
-
+			ptr = waitingList.search(a);
+			if(ptr!=NULL){
+				ptr->c.citizenAhead = waitingList.citizenAhead(a);
+				ptr->c.display();
+			}
+			else{
+				cout<<"You are not registered in the vaccination portal."<<endl;
+			}
 }
-
-
+void Government::govtInterface(){
+	cout<<"Welcome administrator! Enter your password : "<<endl;
+	string s;
+	cin>>s;
+	if(s.compare(password)!=0){
+		cout<<"Incorrect password."<<endl;
+		return;
+	}
+	cout<<"Enter the number of vaccines available today"<<endl;
+	cin>>numVaccines;
+	vaccinesPerSlot = numVaccines/numSlots;
+}
