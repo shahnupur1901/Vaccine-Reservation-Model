@@ -13,7 +13,7 @@ Citizen::Citizen() {
 	citizenAhead = 0;
 	priority = 0;
 }
-bool Citizen::chkEligibility(){
+bool Citizen::chkEligibility(){//checks to see if you are eligible to receive a vaccine
 	cout<<"How many days have passed since you've been tested positive?"<<endl;
 	int days;cin>>days;
 	if(days > 28) return true;
@@ -21,7 +21,7 @@ bool Citizen::chkEligibility(){
 		cout<<"Please come back after "<<28-days<<" days."<<endl;return false;
 	}
 }
-bool Citizen::accept(){
+bool Citizen::accept(){//accept the citizen's details
 	cout<<"Have you been infected with COVID-19? 1 - Yes 2 - No"<<endl;
 	int ch;cin>>ch;
 	if(ch==1 && !chkEligibility()){
@@ -43,7 +43,7 @@ bool Citizen::accept(){
 	}
 	return true;
 }
-void Citizen::display(){
+void Citizen::display(){//Display the citizen information
 	cout<<"Your name : "<<name<<endl;
 	cout<<"Your age : "<<age<<endl;
 	cout<<"Your Aadhar number : "<<aadhar<<endl;
@@ -54,7 +54,7 @@ void Citizen::display(){
 		cout<<"You are in the waiting list. Number of people ahead of you: "<<citizenAhead<<endl;
 	}
 }
-long Citizen::getAadhar(){
+long Citizen::getAadhar(){//as citizen's Aadhardetails are private, constructing function to return the value.
 	return aadhar;
 }
 

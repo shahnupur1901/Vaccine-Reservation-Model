@@ -70,7 +70,6 @@ bool LinkedList::deleteNode(long aadhar_search)
 		}
 		else
 		{
-			//cout<<"There is no such entry "<<endl;
 			return false;
 		}
 	}
@@ -80,7 +79,6 @@ Node* LinkedList::search(long to_search){
 	int flag=0;
 	if(head==NULL)
 	{
-	    //cout<<"The list is empty "<<endl;
 	    return NULL;
 	}
 	else
@@ -96,7 +94,6 @@ Node* LinkedList::search(long to_search){
     	}
     	if(flag==1)
     	{
-    		//cout<<"You have an entry "<<endl;
     		return ptr;
     	}
     	else

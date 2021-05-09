@@ -10,7 +10,7 @@ class Government {
 	int numVaccinatedOnce;
 	int numVaccinatedTwice;
 	int numVaccines;
-	LinkedList arr[3];
+	LinkedList confirmed[3];
 	int allocatedSlotCount[3];
 	int vaccinesPerSlot,numSlots;
 	int numOfMinVaccines;
