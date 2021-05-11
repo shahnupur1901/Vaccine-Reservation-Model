@@ -21,8 +21,8 @@ void Queue::priorityEnqueue(Citizen input)
 	}
 	else{
 		Node* ptr = front;
-		while(ptr->c.priority <= input.priority){
-			if(ptr==rear){
+		while(ptr->c.priority <= input.priority){//check where to enter the temp node
+			if(ptr==rear){//at the end
 				rear->next = temp;
 				temp->prev = rear;
 				rear = temp;
@@ -30,13 +30,13 @@ void Queue::priorityEnqueue(Citizen input)
 			}
 			ptr = ptr->next;
 		}
-		if(ptr==front){
+		if(ptr==front){//at the start
 			front->prev = temp;
 			temp->next = front;
 			front = temp;
 			return;
 		}
-		Node* previous = ptr->prev;
+		Node* previous = ptr->prev;//in the middle
 		temp->prev = previous;
 		temp->next = ptr;
 		previous->next = temp;
