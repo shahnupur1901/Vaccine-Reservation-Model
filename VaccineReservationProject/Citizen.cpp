@@ -28,7 +28,9 @@ bool Citizen::accept(){//accept the citizen's details
 		return false;
 	}
 	cout<<"Enter your name : "<<endl;
-	cin>>name;
+	string s;
+	getline(cin,s);
+	getline(cin,name);
 	cout<<"Enter your age : "<<endl;
 	cin>>age;
 	if(age>60) priority = 1;
