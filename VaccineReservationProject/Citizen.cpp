@@ -53,7 +53,8 @@ void Citizen::display(){//Display the citizen information
 	if(status=="Confirmed!")
 		cout<<"Your slot : "<<slot<<endl;
 	else{
-		cout<<"You are in the waiting list. Number of people ahead of you: "<<citizenAhead<<endl;
+		cout<<"You are in the waiting list.<<endl;
+	        cout<<"Number of people ahead of you: "<<citizenAhead<<endl;
 	}
 }
 
