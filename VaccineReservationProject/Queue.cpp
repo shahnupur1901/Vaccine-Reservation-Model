@@ -50,7 +50,7 @@ Node* Queue::search(long key)
 	ptr=front;
 	while(ptr!=NULL)
 	{
-		if(ptr->c.getAadhar()==key)
+		if(ptr->c.aadhar==key)
 		{
 			flag=1;
 			break;
@@ -86,7 +86,7 @@ bool Queue::deleteNodeWaitingList(long key)
 
 	while(ptr!=NULL)
 	{
-		if(ptr->c.getAadhar()==key)
+		if(ptr->c.aadhar==key)
 		{
 			flag=1;//when key is found
 			break;
@@ -126,6 +126,3 @@ int Queue::citizenAhead(long key){
 	}
 	return count;
 }
-
-
-
