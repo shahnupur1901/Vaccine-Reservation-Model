@@ -56,7 +56,4 @@ void Citizen::display(){//Display the citizen information
 		cout<<"You are in the waiting list. Number of people ahead of you: "<<citizenAhead<<endl;
 	}
 }
-long Citizen::getAadhar(){//as citizen's Aadhar details are private, constructing function to return the value.
-	return aadhar;
-}
 
