@@ -30,6 +30,12 @@ void LinkedList::insert (Citizen c)
 bool LinkedList::deleteNode(long aadhar_search)
 {
 	int flag=0;
+	if(head->c.aadhar==aadhar_search)
+	{
+		head=head->next;
+		delete ptr;
+		return true;
+	}
 	if(head==NULL)
 	{
 	   return false;
