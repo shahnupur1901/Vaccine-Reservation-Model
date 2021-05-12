@@ -78,13 +78,13 @@ void Government::reserveVaccine(){
 		cin>>c.slot;
 		c.status = "Unconfirmed";
 		waitingList.priorityEnqueue(c);
-		waitingList.search(c.getAadhar())->c.citizenAhead = waitingList.citizenAhead(c.getAadhar());//to check number of people ahead in the waiting list
-		waitingList.search(c.getAadhar())->c.display();//display information about user and his/her status.
+		waitingList.search(c.aadhar)->c.citizenAhead = waitingList.citizenAhead(c.aadhar);//to check number of people ahead in the waiting list
+		waitingList.search(c.aadhar)->c.display();//display information about user and his/her status.
 	}
 	else{
 		confirmed[s-1].insert(c);//insertion in linked list in the array
 		allocatedSlotCount[s-1]++;
-		Node* ptr = confirmed[s-1].search(c.getAadhar());
+		Node* ptr = confirmed[s-1].search(c.aadhar);
 		ptr->c.slot = s;//status updation
 		ptr->c.status = "Confirmed!";
 		ptr->c.display();
@@ -221,7 +221,7 @@ void Government::govtInterface(){//only accessible to a government administrator
 				ptr->c.status = "Confirmed!";
 				confirmed[ptr->c.slot - 1].insert(ptr->c);
 				allocatedSlotCount[ptr->c.slot - 1]++;
-				bool isDelete = waitingList.deleteNodeWaitingList(ptr->c.getAadhar());
+				bool isDelete = waitingList.deleteNodeWaitingList(ptr->c.aadhar);
 				i++;
 			}
 		ptr = ptr ->next;
