@@ -39,7 +39,7 @@ bool LinkedList::deleteNode(long aadhar_search)
 		Node *ptr= head;
 		while(ptr!=NULL)
 		{
-			if(ptr->c.getAadhar()==aadhar_search)
+			if(ptr->c.aadhar==aadhar_search)
 			{
 				flag=1;
 				break;
@@ -85,7 +85,7 @@ Node* LinkedList::search(long to_search){
 	{
     	while(ptr!=NULL)
     	{
-    		if(ptr->c.getAadhar()==to_search)
+    		if(ptr->c.aadhar==to_search)
     		{
     			flag=1;
     			break;
@@ -114,4 +114,3 @@ bool LinkedList::is_empty()
 		return false;
 	}
 }
-
