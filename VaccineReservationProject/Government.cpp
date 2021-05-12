@@ -67,7 +67,10 @@ void Government::urgentReservation(){
 void Government::reserveVaccine(){
 	cout<<"Do you have an emergency?\n1. Yes\n2. No"<<endl;
 	int choice;cin>>choice;
-	if(choice==1) urgentReservation();
+	if(choice==1) {
+		urgentReservation();
+		return;
+	}
 	Citizen c;
 	bool isEligible = c.accept();
 	vaccinesPerSlot = numVaccines/numSlots;
