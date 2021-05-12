@@ -63,6 +63,7 @@ Node* Queue::search(long key)
 Citizen Queue::dequeue()
 {
 	Citizen temp;
+	if(front==NULL)return temp;
 	Node *ptr=front;
 	temp=ptr->c;
 	front=front->next;
@@ -83,6 +84,12 @@ bool Queue::deleteNodeWaitingList(long key)
 {
 	Node *ptr=front;
 	int flag=0;
+	if(front->c.aadhar==key)//to check if the node to delete is the first node
+	{
+		front=front->next;
+		delete ptr;
+		return true;
+	}
 
 	while(ptr!=NULL)
 	{
@@ -94,13 +101,6 @@ bool Queue::deleteNodeWaitingList(long key)
 		ptr=ptr->next;//always remember or else loop will run for infinity
 	}
 	if(flag==0){return false;}//when key not found flag remains 0
-	else if(ptr==front)//if first node
-	{
-		front=front->next;
-		front->prev = NULL;
-		delete ptr;
-		return true;
-	}
 	else if(ptr->next==NULL)//if last node
 	{
 		ptr->prev->next = NULL;
