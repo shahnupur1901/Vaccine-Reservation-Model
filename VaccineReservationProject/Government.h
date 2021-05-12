@@ -7,23 +7,24 @@ using namespace std;
 class Government {
 	LinkedList l;
 	Queue waitingList;
-	int numVaccinatedOnce;
+	int numVaccinatedOnlyOnce;
 	int numVaccinatedTwice;
 	int numVaccines;
 	LinkedList confirmed[3];
 	int allocatedSlotCount[3];
 	int vaccinesPerSlot,numSlots;
-	int numOfMinVaccines;
 	string password;
+	int extraVaccines;
 public:
 	Government();
 	void reserveVaccine();
-	void deleteVaccine();
+	void cancelReservation();
 	int available();
 	void checkStatus();
 	void modify();
 	void modifyEndOfDay();
 	void govtInterface();
+	void urgentReservation();
 };
 
 
