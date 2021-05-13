@@ -11,7 +11,6 @@ Government::Government()
 {
 	// TODO Auto-generated constructor stub
 	numVaccines=0;
-    numSlots = 2;
 	for(int i=0;i<numSlots;i++){//initializing array with 0
 		allocatedSlotCount[i] = 0;
 	}
@@ -22,7 +21,7 @@ Government::Government()
 }
 int Government::available()
 {//to check which slots are available so that the user can select appropriately.
-	bool available[2] = {false};
+	bool available[numSlots] = {false};
 	int slot, flag=0;
 	for(int i=0;i<numSlots;i++){
 		if(allocatedSlotCount[i] < vaccinesPerSlot){
@@ -152,18 +151,21 @@ void Government::modify()
 		for(int i=0;i<numSlots;i++)
 		{//check in confirmed array.
 			Node* n = confirmed[i].search(a);
-			if(n!=NULL){
+			if(n!=NULL)
+			{
+				cout<<"Please come after 1 month to take your second dose"<<endl;
 				ptr = n;
 				break;
 			}
 		}
-		l.insert(ptr->c);//inserting the node in government record linked list.
-		numVaccinatedOnlyOnce++;
 		if(ptr==NULL)
 		{//Node cannot be found in confirmed array.
 			cout<<"You are not registered in the vaccination portal."<<endl;
 			return;
 		}
+		ptr->c.numTimesVaccinated=0;//as he has taken his 1 dose ,we have to update his numTimesVaccined to 1 then insert in database
+		l.insert(ptr->c);//inserting the node in government record linked list.
+		numVaccinatedOnlyOnce++;
 	}
 	else{//implies the Citizen received the vaccination for the second time.
 		ptr->c.numTimesVaccinated++;//modify the node details.
@@ -196,9 +198,11 @@ void Government::modifyEndOfDay()
 	}
 	cout<<"The number of people vaccinated only once : "<<numVaccinatedOnlyOnce<<endl;
 	cout<<"The number of people vaccinated twice : "<<numVaccinatedTwice<<endl;
-	allocatedSlotCount[0]=allocatedSlotCount[1]=0;
-	confirmed[0].head=confirmed[1].head=NULL;
-}
+	for(int i=0;i<numSlots;i++)
+	{
+		allocatedSlotCount[i]=0;//refresh slot counts to 0
+		confirmed[i].head=NULL;//refresh all heads of confirmed lists to NULL
+	}
 void Government::checkStatus()
 {//Displays the current status of the citizen's vaccination
 		cout<<"Enter your Aadhar number to check your reservation."<<endl;
