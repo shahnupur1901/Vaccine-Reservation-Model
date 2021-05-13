@@ -4,6 +4,7 @@
 #include "LinkedList.h"
 
 using namespace std;
+#define numSlots 2;//#define is used so that the value becomes global and remains static
 class Government {
 	LinkedList l;
 	Queue waitingList;
