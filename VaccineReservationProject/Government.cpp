@@ -213,6 +213,7 @@ void Government::checkStatus()
 			ptr = confirmed[i].search(a);
 			if(ptr!=NULL){
 				ptr->c.display();//in confirmed array
+				cout<<"Number of doses taken: "<<ptr->c.numTimesVaccinated<<endl;
 				return;
 			}
 		}
@@ -221,6 +222,7 @@ void Government::checkStatus()
 			if(ptr!=NULL){//in waiting list
 				ptr->c.citizenAhead = waitingList.citizenAhead(a);
 				ptr->c.display();
+				cout<<"Number of doses taken: "<<ptr->c.numTimesVaccinated<<endl;
 			}
 			else{//invalid entry
 				cout<<"You are not registered in the vaccination portal."<<endl;
