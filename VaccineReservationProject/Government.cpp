@@ -37,7 +37,7 @@ int Government::available()
 		f = 0;
 		cout<<"Select a slot : "<<endl;
 		cin>>slot;
-		if(flag==1 && slot>numSlots) {
+		if(flag==1 && (slot>numSlots || slot<=0) {
 			f=1;//invalid slot, does not exist.
 			cout<<"Invalid slot, enter again."<<endl;
 		}
