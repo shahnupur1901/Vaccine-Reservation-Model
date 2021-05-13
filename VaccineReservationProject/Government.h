@@ -11,9 +11,9 @@ class Government {
 	int numVaccinatedOnlyOnce;
 	int numVaccinatedTwice;
 	int numVaccines;
-	LinkedList confirmed[3];
-	int allocatedSlotCount[3];
-	int vaccinesPerSlot,numSlots;
+	LinkedList confirmed[numSlots];
+	int allocatedSlotCount[numSlots];
+	int vaccinesPerSlot;
 	string password;
 	int extraVaccines;
 public:
