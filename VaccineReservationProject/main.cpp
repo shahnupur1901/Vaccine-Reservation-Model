@@ -11,7 +11,7 @@ int main(){
 	cout<<"Welcome to the COVID-19 Vaccination Portal!"<<endl;
 	Citizen c;
 	Government govt;
-	int option = 0;
+	option = 0;
 	do{
 		cout<<"1 - Government Interface."<<endl;
 		cout<<"2 - Register for a vaccination."<<endl;
